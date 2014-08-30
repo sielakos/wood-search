@@ -37,3 +37,6 @@ def add_company():
         company.description = request.form['description']
         company.validate()
         company.save()
+        return redirect(url_for('show_companies'))
+
+    return render_template('add_company.html')

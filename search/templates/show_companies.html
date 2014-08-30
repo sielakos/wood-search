@@ -5,17 +5,11 @@
 {% block content %}
     {% for company in companies %}
         <div class="company">
-            <table class="table">
-                <tr>
-                    <th>name</th>
-                    <td>{{ company.name }}</td>
-                </tr>
-                <tr>
-                    <th>description</th>
-                    <td></td>
-                </tr>
-                <tr>{{ company.description }}</tr>
-            </table>
+            <b>Name:</b> {{ company.name }}<br>
+            <b>Description:</b><br>
+            <div class="description">
+                {{ company.description }}
+            </div>
         </div>
     {% endfor %}
 {% endblock %}

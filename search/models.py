@@ -23,7 +23,6 @@ class Product(Document):
     }
 
     use_dot_notation = True
-    use_autorefs = True
 
 
 @db.register
@@ -37,4 +36,4 @@ class Company(Document):
 
     required_fields = ['name', 'description']
 
-    use_autorefs = True
+    use_dot_notation = True
