@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <script src="{{ url_for('static', filename='jquery-2.1.1.js') }}"></script>
+    <script src="{{ url_for('static', filename='angular.js') }}"></script>
+
+    <link rel="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <link rel="{{ url_for('static', filename='bootstrap/css/bootstrap-theme.min.css') }}">
+
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.js') }}"></script>
+</head>
+<body>
+    {% block menu %}
+        {% include 'menu.html' %}
+    {% endblock %}
+
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
