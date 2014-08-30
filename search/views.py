@@ -20,13 +20,13 @@ def show_products():
 @app.route('/show_companies')
 def show_companies():
     companies = db.Company.find()
-
     return render_template('show_companies.html', companies=companies)
 
 
 @app.route('/add_product', methods=['GET', 'POST'])
 def add_product():
-    pass
+    companies = db.Company.find()
+    return render_template('add_product.html', companies=companies)
 
 
 @app.route('/add_company', methods=['GET', 'POST'])
