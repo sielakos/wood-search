@@ -5,6 +5,7 @@ import datetime
 
 @db.register
 class Product(Document):
+    __collection__ = 'products'
     structure = {
         'name': unicode,
         'description': unicode,
@@ -14,7 +15,7 @@ class Product(Document):
         'price': float
     }
 
-    required_fields = ['name', 'description', 'company']
+    required_fields = ['name', 'description', 'company_id']
 
     default_values = {
         'created': datetime.datetime.utcnow,
@@ -27,6 +28,7 @@ class Product(Document):
 
 @db.register
 class Company(Document):
+    __collection__ = 'companies'
     structure = {
         'name': unicode,
         'description': unicode,
