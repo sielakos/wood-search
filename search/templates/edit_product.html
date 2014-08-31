@@ -6,7 +6,7 @@
     {% include 'companies_script.html' %}
 
     <script type="text/javascript">
-        var PRODUCT = {{ product.to_dict()|jsonify }};
+        var PRODUCT = {{ product.to_dict()|jsonify|safe }};
     </script>
 
     <script type="text/javascript" src="{{ url_for('static', filename='js/edit_product.js') }}">

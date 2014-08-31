@@ -4,7 +4,17 @@
 
   editProductModule = angular.module('wsEditProductModule', []);
 
-  editProductCtrl = function($scope) {};
+  editProductCtrl = function($scope) {
+    $scope.name = PRODUCT.name;
+    $scope.price = PRODUCT.price;
+    $scope.description = PRODUCT.description;
+    if (PRODUCT.company != null) {
+      $scope.company = PRODUCT.company;
+    } else {
+      $scope.company = COMPANIES[0];
+    }
+    return $scope.companies = COMPANIES;
+  };
 
   editProductCtrl.$inject = ['$scope'];
 

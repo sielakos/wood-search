@@ -5,6 +5,11 @@
 {% block extra_head %}
     {% include 'companies_script.html' %}
 
+    <script type="text/javascript">
+        var SEND_ADDRESS = '{{ url_for('add_product') }}';
+        var REDIRECT_ADDRESS = '{{ url_for('show_products') }}';
+    </script>
+
     <script src="{{ url_for('static', filename='js/add_product.js') }}">
     </script>
 {% endblock %}
