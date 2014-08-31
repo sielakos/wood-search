@@ -15,34 +15,18 @@ def get_products_from_cursor(products_cursor):
     return products
 
 
-@app.route('/show_products')
+@app.route('/products')
 def show_products():
     products = get_products_from_cursor(db.Product.find())
     return render_template('show_products.html', products=products)
 
 
-def get_product_dict(product):
-    product_dict = {
-        '_id': str(product['_id']),
-        'name': product.name,
-        'price': product.price,
-        'description': product.description
-    }
-    if product.company is not None:
-        product_dict['company'] = {
-            '_id': str(product.company['_id']),
-            'name': product.company.name
-        }
-    return product_dict
-
-
-@app.route('/get_products_data', methods=['POST', 'GET'])
+@app.route('/products/json', methods=['POST', 'GET'])
 def get_products():
     products = get_products_from_cursor(db.Product.find())
     products_json = []
     for product in products:
-        product_dict = get_product_dict(product)
-
+        product_dict = product.to_dict()
         products_json.append(product_dict)
 
     return json.dumps(products_json)
@@ -65,7 +49,7 @@ def add_product_to_company(product):
     company.save()
 
 
-@app.route('/add_product', methods=['GET', 'POST'])
+@app.route('/products/add', methods=['GET', 'POST'])
 def add_product():
     if request.method == 'POST':
         data = request.get_json(force=True)
@@ -75,3 +59,11 @@ def add_product():
 
     companies = db.Company.find()
     return render_template('add_product.html', companies=companies)
+
+
+@app.route('/products/edit/<product_id>', methods=['GET', 'POST'])
+def edit_product(product_id):
+    product = db.Product.find_one_or_404({'_id': ObjectId(product_id)})
+    companies = db.Company.find()
+
+    return render_template('edit_product.html', product=product, companies=companies)

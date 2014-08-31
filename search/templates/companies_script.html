@@ -1,0 +1,14 @@
+<script type="text/javascript">
+    var COMPANIES = [];
+    {% for company in companies %}
+    COMPANIES.push(
+        {
+            'name' : '{{ company.name }}',
+            '_id' : '{{ company._id }}'
+        }
+    );
+    {% endfor %}
+
+    var SEND_ADDRESS = '{{ url_for('add_product') }}';
+    var REDIRECT_ADDRESS = '{{ url_for('show_products') }}';
+</script>

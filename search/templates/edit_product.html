@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Product {{ product.name }}{% endblock %}
+
+{% block extra_head %}
+    {% include 'companies_script.html' %}
+
+    <script type="text/javascript">
+        var PRODUCT = {{ product.to_dict()|jsonify }};
+    </script>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/edit_product.js') }}">
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="page-title">
+        <h1>Edit product: {{ product.name }}</h1>
+    </div>
+
+    <div ng-app="wsEditProductModule" ng-controller="wsEditProductCtrl">
+        {% include 'product_form.html' %}
+    </div>
+{% endblock %}

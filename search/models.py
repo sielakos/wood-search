@@ -24,6 +24,22 @@ class Product(Document):
 
     use_dot_notation = True
 
+    def to_dict(self):
+        product_dict = {
+            '_id': str(self['_id']),
+            'name': self.name,
+            'price': self.price,
+            'description': self.description
+        }
+
+        if self.company is not None:
+            product_dict['company'] = {
+                '_id': str(self.company['_id']),
+                'name': self.company.name
+            }
+
+        return product_dict
+
 
 @db.register
 class Company(Document):
