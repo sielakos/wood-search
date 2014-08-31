@@ -23,7 +23,10 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Add new product</h1>
+    <div class="page-title">
+        <h1>Add new product</h1>
+    </div>
+
     <div ng-app="wsAddProductModule" ng-controller="wsAddProductCtrl">
     {% raw %}
         <form class="form-horizontal" role="form">

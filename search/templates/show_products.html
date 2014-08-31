@@ -2,9 +2,35 @@
 
 {% block title %}Products{% endblock %}
 
+{% block extra_head %}
+    <script type="text/javascript">
+        var PRODUCTS = [];
+        {% for product in products %}
+        PRODUCTS.push({
+           '_id': '{{ product._id }}',
+           'name': '{{ product.name }}',
+           'price': {{ product.price }},
+           'company' : {
+               'name': '{{ product.company.name }}',
+               '_id': '{{ product.company._id }}'
+           },
+           'description': '{{ product.description }}'
+        });
+        {% endfor %}
+    </script>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/show_products.js') }}"></script>
+{% endblock %}
+
 {% block content %}
-    {% for product in products %}
-        <div class="product panel panel-default">
+    <div ng-app="wsShowProductsModule" ng-controller="wsShowProductsCtrl">
+        {% raw %}
+        <div class="page-title">
+            <h1>Products</h1>
+        </div>
+
+
+        <div ng-repeat="product in products" class="product panel panel-default">
             <div class="panel-heading">
                 <h2 class="panel-title">{{ product.name }}</h2>
             </div>
@@ -14,7 +40,7 @@
                         <b>Price:</b>
                     </div>
                     <div class="col-sm-3">
-                        {{ product.price|round(2) }}
+                        {{ product.price }}
                     </div>
                 </div>
 
@@ -37,5 +63,6 @@
                 </div>
             </div>
         </div>
-    {% endfor %}
+        {% endraw %}
+    </div>
 {% endblock %}
