@@ -5,25 +5,15 @@ from flask import render_template, redirect, url_for, request, json
 from bson.objectid import ObjectId
 
 
-def get_products_from_cursor(products_cursor):
-    products = []
-
-    for product in products_cursor:
-        product.company = db.Company.get_from_id(product.company_id)
-        products.append(product)
-
-    return products
-
-
 @app.route('/products')
 def show_products():
-    products = get_products_from_cursor(db.Product.find())
+    products = db.Product.find()
     return render_template('show_products.html', products=products)
 
 
 @app.route('/products/json', methods=['POST', 'GET'])
 def get_products():
-    products = get_products_from_cursor(db.Product.find())
+    products = db.Product.find()
     products_json = []
     for product in products:
         product_dict = product.to_dict()
