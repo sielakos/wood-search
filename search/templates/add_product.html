@@ -15,6 +15,7 @@
         {% endfor %}
 
         var SEND_ADDRESS = '{{ url_for('add_product') }}';
+        var REDIRECT_ADDRESS = '{{ url_for('show_products') }}';
     </script>
 
     <script src="{{ url_for('static', filename='js/add_product.js') }}">

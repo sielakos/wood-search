@@ -1,6 +1,6 @@
 addModule = angular.module 'wsAddProductModule', []
 
-addCtrl = ($scope, $http) ->
+addCtrl = ($scope, $http, $window) ->
   $scope.name = ''
   $scope.description = ''
   $scope.company = COMPANIES[0]
@@ -14,5 +14,9 @@ addCtrl = ($scope, $http) ->
       company: $scope.company
       price: $scope.price
 
-addCtrl.$inject = ['$scope', '$http']
+    promise.success (data) ->
+      if data == 'OK'
+        $window.location.href = REDIRECT_ADDRESS
+
+addCtrl.$inject = ['$scope', '$http', '$window']
 addModule.controller 'wsAddProductCtrl', addCtrl
