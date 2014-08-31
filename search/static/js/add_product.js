@@ -4,15 +4,24 @@
 
   addModule = angular.module('wsAddProductModule', []);
 
-  addCtrl = function($scope) {
+  addCtrl = function($scope, $http) {
     $scope.name = '';
     $scope.description = '';
     $scope.company = COMPANIES[0];
     $scope.price = 0;
-    return $scope.companies = COMPANIES;
+    $scope.companies = COMPANIES;
+    return $scope.send = function() {
+      var promise;
+      return promise = $http.post(SEND_ADDRESS, {
+        name: $scope.name,
+        description: $scope.description,
+        company: $scope.company,
+        price: $scope.price
+      });
+    };
   };
 
-  addCtrl.$inject = ['$scope'];
+  addCtrl.$inject = ['$scope', '$http'];
 
   addModule.controller('wsAddProductCtrl', addCtrl);
 
