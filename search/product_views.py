@@ -4,6 +4,7 @@ from database import db
 from flask import render_template, redirect, url_for, request, json
 from bson.objectid import ObjectId
 
+
 def get_products_from_cursor(products_cursor):
     products = []
 
@@ -13,11 +14,38 @@ def get_products_from_cursor(products_cursor):
 
     return products
 
+
 @app.route('/show_products')
 def show_products():
     products = get_products_from_cursor(db.Product.find())
-
     return render_template('show_products.html', products=products)
+
+
+def get_product_dict(product):
+    product_dict = {
+        '_id': str(product['_id']),
+        'name': product.name,
+        'price': product.price,
+        'description': product.description
+    }
+    if product.company is not None:
+        product_dict['company'] = {
+            '_id': str(product.company['_id']),
+            'name': product.company.name
+        }
+    return product_dict
+
+
+@app.route('/get_products_data', methods=['POST', 'GET'])
+def get_products():
+    products = get_products_from_cursor(db.Product.find())
+    products_json = []
+    for product in products:
+        product_dict = get_product_dict(product)
+
+        products_json.append(product_dict)
+
+    return json.dumps(products_json)
 
 
 def add_product_from_data(data):
