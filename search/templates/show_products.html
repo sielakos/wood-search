@@ -4,28 +4,38 @@
 
 {% block content %}
     {% for product in products %}
-        <div class="product">
-            <table class="table">
-                <tr>
-                    <th>name</th>
-                    <td>{{ product.name }}</td>
-                </tr>
-                <tr>
-                    <th>price</th>
-                    <td>{{ product.price }}</td>
-                </tr>
-                <tr>
-                    <th>company</th>
-                    <td>{{ product.company.name }}</td>
-                </tr>
-                <tr>
-                    <th>description</th>
-                    <td></td>
-                </tr>
-                <tr>
-                    {{- product.description -}}
-                </tr>
-            </table>
+        <div class="product panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">{{ product.name }}</h2>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <b>Price:</b>
+                    </div>
+                    <div class="col-sm-3">
+                        {{ product.price|round(2) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-2">
+                        <b>Company:</b>
+                    </div>
+                    <div class="col-sm-3">
+                        {{ product.company.name }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-2">
+                        <b>Description:</b>
+                    </div>
+                    <div class="col-sm-6">
+                        {{ product.description }}
+                    </div>
+                </div>
+            </div>
         </div>
     {% endfor %}
 {% endblock %}

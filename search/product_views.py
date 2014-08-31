@@ -4,12 +4,18 @@ from database import db
 from flask import render_template, redirect, url_for, request, json
 from bson.objectid import ObjectId
 
+def get_products_from_cursor(products_cursor):
+    products = []
+
+    for product in products_cursor:
+        product.company = db.Company.get_from_id(product.company_id)
+        products.append(product)
+
+    return products
+
 @app.route('/show_products')
 def show_products():
-    products = db.Product.find()
-
-    for product in products:
-        product.company = db.Company.get_from_id(product.company_id)
+    products = get_products_from_cursor(db.Product.find())
 
     return render_template('show_products.html', products=products)
 
