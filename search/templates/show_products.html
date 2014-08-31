@@ -14,7 +14,7 @@
                'name': '{{ product.company.name }}',
                '_id': '{{ product.company._id }}'
            },
-           'description': '{{ product.description }}',
+           'description': '{{ product.description|safe }}',
            'edit_url': '{{ url_for('edit_product', product_id=product._id) }}'
         });
         {% endfor %}

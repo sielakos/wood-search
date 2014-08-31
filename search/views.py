@@ -3,6 +3,7 @@ from flask import render_template, redirect, url_for, request
 from app import app
 from database import db
 import product_views
+from filters import replace_nl
 
 
 @app.route('/')
@@ -20,8 +21,8 @@ def show_companies():
 def add_company():
     if request.method == 'POST':
         company = db.Company()
-        company.name = request.form['name']
-        company.description = request.form['description']
+        company.name = replace_nl(request.form['name'], put_in='')
+        company.description = replace_nl(request.form['description'])
         company.validate()
         company.save()
         return redirect(url_for('show_companies'))

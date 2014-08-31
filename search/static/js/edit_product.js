@@ -4,7 +4,7 @@
 
   editProductModule = angular.module('wsEditProductModule', []);
 
-  editProductCtrl = function($scope) {
+  editProductCtrl = function($scope, $http, $window) {
     $scope.name = PRODUCT.name;
     $scope.price = PRODUCT.price;
     $scope.description = PRODUCT.description;
@@ -13,10 +13,24 @@
     } else {
       $scope.company = COMPANIES[0];
     }
-    return $scope.companies = COMPANIES;
+    $scope.companies = COMPANIES;
+    return $scope.send = function() {
+      var promise;
+      promise = $http.post(SEND_ADDRESS, {
+        name: $scope.name,
+        description: $scope.description,
+        company: $scope.company,
+        price: $scope.price
+      });
+      return promise.success(function(data) {
+        if (data === 'OK') {
+          return $window.location.href = REDIRECT_ADDRESS;
+        }
+      });
+    };
   };
 
-  editProductCtrl.$inject = ['$scope'];
+  editProductCtrl.$inject = ['$scope', '$http', '$window'];
 
   editProductModule.controller('wsEditProductCtrl', editProductCtrl);
 

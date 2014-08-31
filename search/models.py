@@ -24,10 +24,6 @@ class Product(Document):
 
     use_dot_notation = True
 
-    def __init__(self, *args, **kwargs):
-        super(Product, self).__init__(*args, **kwargs)
-        self.company_cache = None
-
     def to_dict(self):
         product_dict = {
             '_id': str(self['_id']),
@@ -46,10 +42,10 @@ class Product(Document):
 
     @property
     def company(self):
-        if self.company_id is not None and self.company_cache is None:
-            self.company_cache = db.Company.get_from_id(self.company_id)
-
-        return self.company_cache
+        #TODO: implement good cache mechanism
+        if self.company_id is not None:
+            return db.Company.get_from_id(self.company_id)
+        return None
 
 
 @db.register

@@ -7,6 +7,9 @@
 
     <script type="text/javascript">
         var PRODUCT = {{ product.to_dict()|jsonify|safe }};
+
+        var SEND_ADDRESS = '{{ url_for('edit_product', product_id=product._id) }}';
+        var REDIRECT_ADDRESS = '{{ url_for('show_products') }}'
     </script>
 
     <script type="text/javascript" src="{{ url_for('static', filename='js/edit_product.js') }}">

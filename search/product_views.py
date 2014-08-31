@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from app import app
 from database import db
-from flask import render_template, redirect, url_for, request, json
+from flask import render_template, request, json
 from bson.objectid import ObjectId
+from filters import replace_nl
 
 
 @app.route('/products')
@@ -24,9 +25,9 @@ def get_products():
 
 def add_product_from_data(data):
     product = db.Product()
-    product.name = data['name']
+    product.name = replace_nl(data['name'], put_in='')
     product.price = float(data['price'])
-    product.description = data['description']
+    product.description = replace_nl(data['description'])
     product.company_id = ObjectId(data['company']['_id'])
     product.validate()
     product.save()
@@ -51,9 +52,30 @@ def add_product():
     return render_template('add_product.html', companies=companies)
 
 
+def remove_product_from_company(product):
+    company = product.company
+    company.products_ids.remove(product['_id'])
+    company.save()
+
+
 @app.route('/products/edit/<product_id>', methods=['GET', 'POST'])
 def edit_product(product_id):
     product = db.Product.find_one_or_404({'_id': ObjectId(product_id)})
+
+    if request.method == 'POST':
+        data = request.get_json(force=True)
+        product.name = replace_nl(data['name'], put_in='')
+        product.price = float(data['price'])
+        product.description = replace_nl(data['description'])
+
+        if str(product.company_id) != data['company']['_id']:
+            remove_product_from_company(product)
+            product.company_id = ObjectId(data['company']['_id'])
+            add_product_to_company(product)
+
+        product.save()
+        return 'OK'
+
     companies = db.Company.find()
 
     return render_template('edit_product.html', product=product, companies=companies)
