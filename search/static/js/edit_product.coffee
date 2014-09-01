@@ -6,7 +6,9 @@ editProductCtrl = ($scope, $http, $window) ->
   $scope.description = PRODUCT.description
 
   if PRODUCT.company?
-    $scope.company = PRODUCT.company
+    for company in COMPANIES
+      if company._id == PRODUCT.company._id
+        $scope.company = company
   else
     $scope.company = COMPANIES[0]
 

@@ -5,11 +5,17 @@
   editProductModule = angular.module('wsEditProductModule', []);
 
   editProductCtrl = function($scope, $http, $window) {
+    var company, _i, _len;
     $scope.name = PRODUCT.name;
     $scope.price = PRODUCT.price;
     $scope.description = PRODUCT.description;
     if (PRODUCT.company != null) {
-      $scope.company = PRODUCT.company;
+      for (_i = 0, _len = COMPANIES.length; _i < _len; _i++) {
+        company = COMPANIES[_i];
+        if (company._id === PRODUCT.company._id) {
+          $scope.company = company;
+        }
+      }
     } else {
       $scope.company = COMPANIES[0];
     }
