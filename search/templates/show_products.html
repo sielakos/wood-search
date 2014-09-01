@@ -2,34 +2,13 @@
 
 {% block title %}Products{% endblock %}
 
-{% block extra_head %}
-    <script type="text/javascript">
-        var PRODUCTS = [];
-        {% for product in products %}
-        PRODUCTS.push({
-           '_id': '{{ product._id }}',
-           'name': '{{ product.name }}',
-           'price': {{ product.price }},
-           'company' : {
-               'name': '{{ product.company.name }}',
-               '_id': '{{ product.company._id }}'
-           },
-           'description': '{{ product.description|safe }}',
-           'edit_url': '{{ url_for('edit_product', product_id=product._id) }}'
-        });
-        {% endfor %}
-    </script>
-
-    <script type="text/javascript" src="{{ url_for('static', filename='js/show_products.js') }}"></script>
-{% endblock %}
-
 {% block content %}
-    <div ng-app="wsShowProductsModule" ng-controller="wsShowProductsCtrl">
-        <div class="page-title">
-            <h1>Products</h1>
-        </div>
-        {% raw %}
-        <div ng-repeat="product in products" class="product panel panel-default">
+    <div class="page-title">
+        <h1>Products</h1>
+    </div>
+
+    {% for product in products %}
+        <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-sm-8">
@@ -37,8 +16,8 @@
                     </div>
                     <div class="col-sm-4">
                         <ul class="pull-right list-inline">
-                            <li><a  href="{{ product.edit_url }}">edit</a></li>
-                            <li>remove</li>
+                            <li><a  href="{{ url_for('edit_product', product_id=product._id) }}">edit</a></li>
+                            <li><a href="{{ url_for('remove_product', product_id=product._id) }}">remove</a></li>
                         </ul>
                     </div>
                 </div>
@@ -73,6 +52,6 @@
                 </div>
             </div>
         </div>
-        {% endraw %}
-    </div>
+    {% endfor %}
+
 {% endblock %}

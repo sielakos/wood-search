@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from app import app
 from database import db
-from flask import render_template, request, json
+from flask import render_template, request, json, redirect, url_for
 from bson.objectid import ObjectId
 from filters import replace_nl
 
@@ -80,3 +80,11 @@ def edit_product(product_id):
     companies = db.Company.find()
 
     return render_template('edit_product.html', product=product, companies=companies)
+
+
+@app.route('/products/remove/<product_id>', methods=['GET', 'POST'])
+def remove_product(product_id):
+    product = db.Product.find_one_or_404({'_id': ObjectId(product_id)})
+    remove_product_from_company(product)
+    product.delete()
+    return redirect(url_for('show_products'))
