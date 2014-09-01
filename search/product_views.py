@@ -54,8 +54,9 @@ def add_product():
 
 def remove_product_from_company(product):
     company = product.company
-    company.products_ids.remove(product['_id'])
-    company.save()
+    if company is not None and product['_id'] in company.products_ids:
+        company.products_ids.remove(product['_id'])
+        company.save()
 
 
 @app.route('/products/edit/<product_id>', methods=['GET', 'POST'])
@@ -68,7 +69,7 @@ def edit_product(product_id):
         product.price = float(data['price'])
         product.description = replace_nl(data['description'])
 
-        if str(product.company_id) != data['company']['_id']:
+        if product.company is None or str(product.company_id) != data['company']['_id']:
             remove_product_from_company(product)
             product.company_id = ObjectId(data['company']['_id'])
             add_product_to_company(product)
