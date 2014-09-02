@@ -3,7 +3,10 @@
 {% block title %}Add Company{% endblock %}
 
 {% block content %}
-    <h2>Create new company:</h2>
+    <div class="page-title">
+        <h1>Create new company</h1>
+    </div>
+
     <form class="form-horizontal" role="form" method="post" action="{{ url_for('add_company') }}">
         <div class="form-group">
             <label class="control-label col-sm-2" for="company-name">Name:</label>
