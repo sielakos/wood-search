@@ -1,0 +1,46 @@
+{% for product in products %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h2 class="panel-title">{{ product.name }}</h2>
+                </div>
+                <div class="col-sm-4">
+                    <ul class="pull-right list-inline">
+                        <li><a  href="{{ url_for('edit_product', product_id=product._id) }}">edit</a></li>
+                        <li><a href="{{ url_for('remove_product', product_id=product._id) }}">remove</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-2">
+                    <b>Price:</b>
+                </div>
+                <div class="col-sm-3">
+                    {{ product.price }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-2">
+                    <b>Company:</b>
+                </div>
+                <div class="col-sm-3">
+                    {{ product.company.name }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-2">
+                    <b>Description:</b>
+                </div>
+                <div class="col-sm-6">
+                    {{ product.description }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}

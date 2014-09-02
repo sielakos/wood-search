@@ -71,3 +71,6 @@ class Company(Document):
     required_fields = ['name', 'description']
 
     use_dot_notation = True
+
+    def get_products(self):
+        return db.Product.find({'_id': {'$in': self.products_ids}})

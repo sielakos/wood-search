@@ -35,3 +35,9 @@ def edit_company(company_id):
         return redirect(url_for('show_companies'))
 
     return render_template('edit_company.html', company=company)
+
+
+@app.route('/companies/show/<ObjectId:company_id>')
+def show_company(company_id):
+    company = db.Company.get_from_id(company_id)
+    return render_template('show_company.html', company=company)

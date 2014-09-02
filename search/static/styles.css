@@ -14,3 +14,16 @@
 .page-title h1 {
     color: #4a54ff
 }
+
+.company .description {
+    color: rgb(100, 100, 100)
+}
+
+.company {
+    margin: 10px;
+    font-family: helvetica, verdana;
+}
+
+.company .title {
+    font-size: 20pt;
+}
