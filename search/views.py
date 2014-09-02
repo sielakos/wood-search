@@ -1,30 +1,12 @@
 # -*- coding: utf-8 -*-
-from flask import render_template, redirect, url_for, request
+from flask import redirect, url_for
 from app import app
-from database import db
-import product_views
-from filters import replace_nl
 
+import product_views
+import companies_views
 
 @app.route('/')
 def index():
     return redirect(url_for('show_products'))
 
 
-@app.route('/show_companies')
-def show_companies():
-    companies = db.Company.find()
-    return render_template('show_companies.html', companies=companies)
-
-
-@app.route('/add_company', methods=['GET', 'POST'])
-def add_company():
-    if request.method == 'POST':
-        company = db.Company()
-        company.name = replace_nl(request.form['name'], put_in='')
-        company.description = replace_nl(request.form['description'])
-        company.validate()
-        company.save()
-        return redirect(url_for('show_companies'))
-
-    return render_template('add_company.html')
