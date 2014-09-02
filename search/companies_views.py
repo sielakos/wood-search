@@ -5,13 +5,13 @@ from database import db
 from filters import replace_nl
 
 
-@app.route('/show_companies')
+@app.route('/companies/')
 def show_companies():
     companies = db.Company.find()
     return render_template('show_companies.html', companies=companies)
 
 
-@app.route('/add_company', methods=['GET', 'POST'])
+@app.route('/companies/add', methods=['GET', 'POST'])
 def add_company():
     if request.method == 'POST':
         company = db.Company()
@@ -22,3 +22,16 @@ def add_company():
         return redirect(url_for('show_companies'))
 
     return render_template('add_company.html')
+
+
+@app.route('/companies/edit/<ObjectId:company_id>', methods=['GET', 'POST'])
+def edit_company(company_id):
+    company = db.Company.get_from_id(company_id)
+
+    if request.method == 'POST':
+        company.name = request.form['name']
+        company.description = replace_nl(request.form['description'])
+        company.save()
+        return redirect(url_for('show_companies'))
+
+    return render_template('edit_company.html', company=company)

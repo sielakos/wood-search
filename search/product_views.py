@@ -6,7 +6,7 @@ from bson.objectid import ObjectId
 from filters import replace_nl
 
 
-@app.route('/products')
+@app.route('/products/')
 def show_products():
     products = db.Product.find()
     return render_template('show_products.html', products=products)
