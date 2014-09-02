@@ -74,3 +74,6 @@ class Company(Document):
 
     def get_products(self):
         return db.Product.find({'_id': {'$in': self.products_ids}})
+
+    def remove_products(self):
+        db.Product.collection.remove({'_id' : {'$in' : self.products_ids}})

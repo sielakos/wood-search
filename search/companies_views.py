@@ -32,7 +32,7 @@ def edit_company(company_id):
         company.name = request.form['name']
         company.description = replace_nl(request.form['description'])
         company.save()
-        return redirect(url_for('show_companies'))
+        return redirect(url_for('show_company'))
 
     return render_template('edit_company.html', company=company)
 
@@ -41,3 +41,11 @@ def edit_company(company_id):
 def show_company(company_id):
     company = db.Company.get_from_id(company_id)
     return render_template('show_company.html', company=company)
+
+
+@app.route('/companies/remove/<ObjectId:company_id>', methods=['GET', 'POST'])
+def remove_company(company_id):
+    company = db.Company.get_from_id(company_id)
+    company.remove_products()
+    company.delete()
+    return redirect(url_for('show_companies'))
