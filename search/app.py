@@ -9,4 +9,5 @@ app.config.update(
         'DEBUG': True,
     }
 )
+
 app.config.from_envvar('SEARCH_SETTINGS', silent=True)

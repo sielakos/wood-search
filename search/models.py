@@ -77,3 +77,24 @@ class Company(Document):
 
     def remove_products(self):
         db.Product.collection.remove({'_id' : {'$in' : self.products_ids}})
+
+
+@db.register
+class User(Document):
+    __collection__ = 'companies'
+    structure = {
+        'name': unicode,
+        'pass_hash': unicode,
+        'salt': unicode,
+        'roles': [unicode],
+        'email': unicode,
+        'access_list': [(None, unicode)]
+    }
+
+    use_dot_notation = True
+
+    default_values = {
+        'roles': [],
+        'access_list': []
+    }
+
