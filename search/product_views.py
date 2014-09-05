@@ -9,7 +9,7 @@ from filters import replace_nl
 @app.route('/products/')
 def show_products():
     products = db.Product.find()
-    return render_template('show_products.html', products=products)
+    return render_template('product/show_products.html', products=products)
 
 
 @app.route('/products/json', methods=['POST', 'GET'])
@@ -49,7 +49,7 @@ def add_product():
         return "OK"
 
     companies = db.Company.find()
-    return render_template('add_product.html', companies=companies)
+    return render_template('product/add_product.html', companies=companies)
 
 
 def remove_product_from_company(product):
@@ -79,7 +79,7 @@ def edit_product(product_id):
 
     companies = db.Company.find()
 
-    return render_template('edit_product.html', product=product, companies=companies)
+    return render_template('product/edit_product.html', product=product, companies=companies)
 
 
 @app.route('/products/remove/<product_id>', methods=['GET', 'POST'])
