@@ -62,3 +62,17 @@ def is_owner_decorator(object_id):
         return view_func
 
     return decorator
+
+
+def logged_in_decorator(view):
+    @wraps(view)
+    def view_func(*args, **kwargs):
+        user = get_current_user()
+        if user is not None:
+            return view(*args, **kwargs)
+        else:
+            session['login_redirect'] = request.url
+            flash('You must be logged in')
+            return redirect(url_for('login'))
+
+    return view_func
