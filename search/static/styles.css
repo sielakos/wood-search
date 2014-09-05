@@ -27,3 +27,18 @@
 .company .title {
     font-size: 20pt;
 }
+
+.flash {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 40%;
+    border-radius: 4px;
+    border: 1px solid  rgba(8, 83, 185, 0.3);
+    background-color: rgba(81, 124, 185, 0.3);
+}
+
+.flash .flash-msg {
+    margin: 0px 5px 0px 5px;
+    padding: 0px;
+    text-align: center;
+}

@@ -5,9 +5,9 @@ import uuid
 
 def hash_password(password, salt):
     m = hashlib.sha512()
-    m.upadte(password)
+    m.update(password)
     m.update(salt)
-    return str(m.hexdigest())
+    return unicode(m.hexdigest())
 
 
 def get_salt():

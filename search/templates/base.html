@@ -21,7 +21,12 @@
         {% include 'menu.html' %}
     {% endblock %}
 
+
     <div class="container main-content">
+        {% block flashes %}
+            {% include 'flashes.html' %}
+        {% endblock %}
+
         {% block content %}
         {% endblock %}
     </div>

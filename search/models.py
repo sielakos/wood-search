@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from database import db
 from flask.ext.mongokit import Document
+from mongokit import OR
 import datetime
 
 @db.register
@@ -76,19 +77,19 @@ class Company(Document):
         return db.Product.find({'_id': {'$in': self.products_ids}})
 
     def remove_products(self):
-        db.Product.collection.remove({'_id' : {'$in' : self.products_ids}})
+        db.Product.collection.remove({'_id': {'$in' : self.products_ids}})
 
 
 @db.register
 class User(Document):
-    __collection__ = 'companies'
+    __collection__ = 'users'
     structure = {
-        'name': unicode,
-        'pass_hash': unicode,
-        'salt': unicode,
-        'roles': [unicode],
-        'email': unicode,
-        'access_list': [(None, unicode)]
+        'name': basestring,
+        'pass_hash': basestring,
+        'salt': basestring,
+        'roles': [basestring],
+        'email': basestring,
+        'access_list': [(None, basestring)]
     }
 
     use_dot_notation = True

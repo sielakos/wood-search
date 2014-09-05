@@ -11,3 +11,6 @@ app.config.update(
 )
 
 app.config.from_envvar('SEARCH_SETTINGS', silent=True)
+
+#this secret key must be changedin production
+app.secret_key = 'ABZr98j/3yXfdd R~XHH!jmN]LWX/,?RT'
