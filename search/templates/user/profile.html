@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ user.name }} user profile{% endblock %}
+
+{% block content %}
+    <div clas="row">
+        <div class="hidden-xs hidden-sm col-lg-2"></div>
+        <div class="col-lg-8 user-profile">
+            <div class="row">
+                <div class="col-xs-4 col-lg-2">
+                    <b>Name</b>
+                </div>
+                <div class="col-xs-4 col-lg-5">
+                    {{ user.name }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-4 col-lg-2">
+                    <b>E-Mail</b>
+                </div>
+                <div class="col-xs-4 col-lg-5">
+                    {{ user.email }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-4 col-lg-2">
+                    <b>Roles</b>
+                </div>
+                <div class="col-xs-4 col-lg-5">
+                    <ul class="list-inline list-separated">
+                        {% for role in user.roles %}
+                            <li>{{ role }}</li>
+                        {% endfor %}
+                        <li>1</li>
+                        <li>2</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

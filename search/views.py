@@ -4,6 +4,7 @@ from app import app
 import product_views
 import companies_views
 import login
+import user_views
 
 @app.route('/')
 def index():
