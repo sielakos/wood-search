@@ -3,7 +3,7 @@
 {% block title %}Edit Product {{ product.name }}{% endblock %}
 
 {% block extra_head %}
-    {% include 'companies_script.html' %}
+    {% include 'company/companies_script.html' %}
 
     <script type="text/javascript">
         var PRODUCT = {{ product.to_dict()|jsonify|safe }};

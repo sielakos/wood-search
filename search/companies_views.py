@@ -8,7 +8,7 @@ from filters import replace_nl
 @app.route('/companies/')
 def show_companies():
     companies = db.Company.find()
-    return render_template('show_companies.html', companies=companies)
+    return render_template('company/show_companies.html', companies=companies)
 
 
 @app.route('/companies/add', methods=['GET', 'POST'])
@@ -21,7 +21,7 @@ def add_company():
         company.save()
         return redirect(url_for('show_companies'))
 
-    return render_template('add_company.html')
+    return render_template('company/add_company.html')
 
 
 @app.route('/companies/edit/<ObjectId:company_id>', methods=['GET', 'POST'])
@@ -34,13 +34,13 @@ def edit_company(company_id):
         company.save()
         return redirect(url_for('show_company'))
 
-    return render_template('edit_company.html', company=company)
+    return render_template('company/edit_company.html', company=company)
 
 
 @app.route('/companies/show/<ObjectId:company_id>')
 def show_company(company_id):
     company = db.Company.get_from_id(company_id)
-    return render_template('show_company.html', company=company)
+    return render_template('company/show_company.html', company=company)
 
 
 @app.route('/companies/remove/<ObjectId:company_id>', methods=['GET', 'POST'])
