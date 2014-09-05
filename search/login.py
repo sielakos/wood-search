@@ -26,7 +26,7 @@ def check_login(user):
 
 
 def correct_login_action(user):
-    address = session.get('login_redirect', url_for('index'))
+    address = session.pop('login_redirect', url_for('index'))
     session['user'] = str(user['_id'])
     flash('You logged in as %s' % user.name)
     return redirect(address)

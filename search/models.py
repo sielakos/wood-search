@@ -89,7 +89,7 @@ class User(Document):
         'salt': basestring,
         'roles': [basestring],
         'email': basestring,
-        'access_list': [(None, basestring)]
+        'access_list': [None]
     }
 
     use_dot_notation = True
