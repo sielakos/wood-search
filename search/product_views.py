@@ -4,6 +4,7 @@ from database import db
 from flask import render_template, request, json, redirect, url_for
 from bson.objectid import ObjectId
 from filters import replace_nl
+from auth import has_role_decorator, is_owner_decorator
 
 
 @app.route('/products/')
@@ -13,6 +14,7 @@ def show_products():
 
 
 @app.route('/products/json', methods=['POST', 'GET'])
+@has_role_decorator('ROLE_ADMIN')
 def get_products():
     products = db.Product.find()
     products_json = []
@@ -41,6 +43,7 @@ def add_product_to_company(product):
 
 
 @app.route('/products/add', methods=['GET', 'POST'])
+@has_role_decorator('ROLE_ADMIN')
 def add_product():
     if request.method == 'POST':
         data = request.get_json(force=True)
@@ -63,28 +66,37 @@ def remove_product_from_company(product):
 def edit_product(product_id):
     product = db.Product.find_one_or_404({'_id': ObjectId(product_id)})
 
-    if request.method == 'POST':
-        data = request.get_json(force=True)
-        product.name = replace_nl(data['name'], put_in='')
-        product.price = float(data['price'])
-        product.description = replace_nl(data['description'])
+    @is_owner_decorator(product['_id'])
+    def action():
+        if request.method == 'POST':
+            data = request.get_json(force=True)
+            product.name = replace_nl(data['name'], put_in='')
+            product.price = float(data['price'])
+            product.description = replace_nl(data['description'])
 
-        if product.company is None or str(product.company_id) != data['company']['_id']:
-            remove_product_from_company(product)
-            product.company_id = ObjectId(data['company']['_id'])
-            add_product_to_company(product)
+            if product.company is None or str(product.company_id) != data['company']['_id']:
+                remove_product_from_company(product)
+                product.company_id = ObjectId(data['company']['_id'])
+                add_product_to_company(product)
 
-        product.save()
-        return 'OK'
+            product.save()
+            return 'OK'
 
-    companies = db.Company.find()
+        companies = db.Company.find()
 
-    return render_template('product/edit_product.html', product=product, companies=companies)
+        return render_template('product/edit_product.html', product=product, companies=companies)
+
+    return action()
 
 
 @app.route('/products/remove/<product_id>', methods=['GET', 'POST'])
 def remove_product(product_id):
     product = db.Product.find_one_or_404({'_id': ObjectId(product_id)})
-    remove_product_from_company(product)
-    product.delete()
-    return redirect(url_for('show_products'))
+
+    @is_owner_decorator(product['_id'])
+    def action():
+        remove_product_from_company(product)
+        product.delete()
+        return redirect(url_for('show_products'))
+
+    return action()
