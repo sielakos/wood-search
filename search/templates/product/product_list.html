@@ -6,7 +6,7 @@
                     <h2 class="panel-title">{{ product.name }}</h2>
                 </div>
                 <div class="col-sm-4">
-                    {% if is_owner(product._id) %}
+                    {% if is_owner(product.company._id) %}
                         <ul class="pull-right list-inline">
                             <li><a  href="{{ url_for('edit_product', product_id=product._id) }}">edit</a></li>
                             <li><a href="{{ url_for('remove_product', product_id=product._id) }}">remove</a></li>

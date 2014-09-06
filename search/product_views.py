@@ -66,7 +66,7 @@ def remove_product_from_company(product):
 def edit_product(product_id):
     product = db.Product.find_one_or_404({'_id': ObjectId(product_id)})
 
-    @is_owner_decorator(product['_id'])
+    @is_owner_decorator(product.company['_id'])
     def action():
         if request.method == 'POST':
             data = request.get_json(force=True)
@@ -93,7 +93,7 @@ def edit_product(product_id):
 def remove_product(product_id):
     product = db.Product.find_one_or_404({'_id': ObjectId(product_id)})
 
-    @is_owner_decorator(product['_id'])
+    @is_owner_decorator(product.company['_id'])
     def action():
         remove_product_from_company(product)
         product.delete()
