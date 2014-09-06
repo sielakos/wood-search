@@ -3,7 +3,7 @@ from app import app
 from auth import has_role_decorator, logged_in_decorator, get_current_user, redirect_on_false_decorator, has_role, request
 from flask import render_template, redirect, url_for, flash
 from database import db
-from hashing import hash_password
+from hashing import hash_password, get_salt
 
 
 @app.route('/user/profile')
@@ -21,7 +21,10 @@ def verify_password_change(user):
 
 
 def change_password_for_user(user):
-    pass
+    new_pass = request.form['new-password']
+    user.salt = get_salt()
+    user.pass_hash = hash_password(new_pass, user.salt)
+    user.save()
 
 
 @app.route('/user/change_password/<ObjectId:user_id>', methods=['GET', 'POST'])
