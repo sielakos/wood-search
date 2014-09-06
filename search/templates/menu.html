@@ -1,6 +1,34 @@
-<ul class="nav nav-tabs">
-    <li><a href="{{ url_for('show_products') }}">Show Products</a></li>
-    <li><a href="{{ url_for('show_companies') }}">Show Companies</a></li>
-    <li><a href="{{ url_for('add_product') }}">Add Product</a></li>
-    <li><a href="{{ url_for('add_company') }}">Add Company</a></li>
-</ul>
+<div class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand ws-brand" href="{{ url_for('index') }}">Wood-Search</a>
+        </div>
+
+        <ul class="nav navbar-nav">
+            <li><a href="{{ url_for('show_products') }}">Show Products</a></li>
+            <li><a href="{{ url_for('show_companies') }}">Show Companies</a></li>
+            <li><a href="{{ url_for('add_product') }}">Add Product</a></li>
+            <li><a href="{{ url_for('add_company') }}">Add Company</a></li>
+        </ul>
+
+        <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        <ul class="nav navbar-nav navbar-right">
+            {% if not is_logged_in() %}
+                <li><a href="{{ url_for('login') }}">login</a></li>
+            {% else %}
+                {% with user = get_current_user() %}
+                    <li><a href="{{ url_for('user_profile') }}">{{ user.name }} - profile</a></li>
+                    <li><a href="{{ url_for('logout') }}">logout</a></li>
+                {% endwith %}
+            {% endif %}
+        </ul>
+
+    </div>
+
+</div>

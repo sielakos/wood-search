@@ -6,6 +6,6 @@ from flask import render_template
 
 @app.route('/user/profile')
 @logged_in_decorator
-def profile():
+def user_profile():
     user = get_current_user()
     return render_template('user/profile.html', user=user)

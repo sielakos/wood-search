@@ -32,6 +32,12 @@ def is_owner(object_id, user=None):
     return user is not None and (object_id in user.access_list or has_role('ROLE_ADMIN', user))
 
 
+@app.template_global()
+def is_logged_in():
+    user = get_current_user()
+    return user is not None
+
+
 def has_role_decorator(role):
     def decorator(view):
         @wraps(view)

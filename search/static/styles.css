@@ -60,3 +60,11 @@
     content: ',';
     margin-right: 5px;
 }
+
+.navbar-nav a {
+    color: rgb(64, 137, 185) !important;
+}
+
+.ws-brand {
+    color: #71BD72 !important;
+}
