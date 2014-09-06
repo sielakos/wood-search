@@ -82,3 +82,19 @@ def logged_in_decorator(view):
             return redirect(url_for('login'))
 
     return view_func
+
+
+def redirect_on_false_decorator(condition):
+    def decorator(view):
+        @wraps(view)
+        def view_func(*args, **kwargs):
+            if condition:
+                return view(*args, **kwargs)
+            else:
+                session['login_redirect'] = request.url
+                flash('You do not have access to this page')
+                return redirect(url_for('login'))
+
+        return view_func
+
+    return decorator
